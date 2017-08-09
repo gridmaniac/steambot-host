@@ -1,0 +1,15 @@
+doctype html
+html
+  include ./includes/head
+  body
+    .navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand(href="/") STMB HOST
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li
+              a(href="/log") Протокол
+   
+    block content
+    include ./includes/scripts

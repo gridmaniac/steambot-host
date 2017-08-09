@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  .container
+    br
+    h2.page-header Управление ботами
+  br
+  .container
+    if error && error != ''
+      .alert.alert-danger #{error}
+    if success && success != ''
+      .alert.alert-info #{success}
+    .panel.panel-default
+      .panel-heading Steam IDs
+      .panel-body
+        form(method="post" action="/add-ids" encType="multipart/form-data")
+          .row
+            .col-lg-5
+              .form-group.input-group
+                span.input-group-addon Group ID
+                input.form-control(name="group" required)
+            .col-lg-5
+              .form-group.input-group
+                span#steam-ids-label.input-group-addon Steam IDs
+                input#steam-ids.hide(type="file" name="ids" required)
+                span#upload-steam-ids.input-group-btn
+                  .btn.btn-success Выбрать файл
+            .col-lg-2
+              input.btn.btn-info(type="submit" value="Добавить" style="width:100%")
+    .panel.panel-default
+      .panel-heading Активные боты
+      .panel-body
+        table.table
+          tr
+            th Аккаунт
+            th Email
+            th Статус
+            th 
+          if bots
+            each bot in bots
+              tr
+                td #{bot.account}
+                td #{bot.email}
+                td
+                  case bot.status
+                    when 0
+                      form(method="post" action="/steam-guard")
+                        .form-group
+                          input(type="hidden" name="id" value=bot.id)
+                          input(placeholder="КОД" style="width:50px;text-align:center" name="code")
+                          input.btn.btn-success.btn-xs(type="submit" style="margin-top:-3px;" value="Войти" required)
+                    when 1
+                      .label.label-success Онлайн
+                td
+                  form(method="post" action="/kill")
+                    input(type="hidden" name="id" value=bot.id)
+                    button.btn.btn-danger.btn-xs KILL
+          else
+            tr
+              td Нет активных ботов
+        .btn.btn-primary.pull-left(data-toggle="modal" data-target="#addbots-modal") Добавить ботов
+  include ./includes/addbots-modal

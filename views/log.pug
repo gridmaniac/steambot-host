@@ -1,0 +1,71 @@
+extends layout
+
+block content
+  .container
+    br
+    h2.page-header Протокол
+  br
+  .container
+    if error
+      .alert.alert-danger #{error}
+    if success
+      .alert.alert-info #{success}
+    .panel.panel-default
+      .panel-heading Фильтрация
+      .panel-body
+        form#filter(method="get" action="/log")
+          .row
+            .col-lg-3
+              .form-group.input-group
+                span.input-group-addon Код ошибки
+                input.form-control(name="code" value=filter.code)
+            .col-lg-3
+              .form-group.input-group
+                span.input-group-addon Аккаунт
+                input.form-control(name="account" value=filter.account)
+            .col-lg-4
+              .form-group.input-group
+                span.input-group-addon Сообщение
+                input.form-control(name="message" value=filter.message)
+            .col-lg-2
+              input.btn.btn-info(type="submit" value="Применить" style="width:100%")
+    .panel.panel-default
+      .panel-heading Лог
+      .panel-body
+        table.table
+          tr
+            th Сообщение
+            th Код
+            th Аккаунт
+            th Дата
+          if logs
+            each log in logs
+              tr
+                td #{log.message}
+                td #{log.code}
+                td #{log.account}
+                td #{log.date}
+          else
+            tr
+              td Нет сообщений
+        ul.pagination.pagination-sm.pull-right
+          if (!pagination.previous)
+            li.page-item.disabled
+              a(href='#') &laquo;
+          else
+            li.page-item
+              a(href='#p=' + pagination.previous page=pagination.previous) &laquo;
+          li.page-item.active
+            a(href='#&p=' + pagination.current page=pagination.current) #{pagination.current}
+          if (pagination.last - pagination.current > 1)
+            li.page-item
+              a(href='#&p=' + (pagination.current + 1) page=pagination.current + 1) #{pagination.current + 1}
+          if (pagination.last - pagination.current > 2)
+            li.page-item
+              a(href='#&p=' + (pagination.current + 2) page=pagination.current + 2) #{pagination.current + 2}
+          if (!pagination.next)
+            li.page-item.disabled
+              a(href='#') &raquo;
+          else
+            li.page-item
+              a(href='#p=' + pagination.next page=pagination.next) &raquo;

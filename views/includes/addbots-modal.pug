@@ -1,0 +1,17 @@
+.modal.fade#addbots-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title(style="display:inline") Добавить ботов
+        button.close(data-dismiss="modal")
+          span &times;
+      .modal-body
+        .panel.panel-success
+          .panel-heading Конфигурация в формате XML
+          .panel-body
+            form#addbots(method="post" action="/add-bots" encType="multipart/form-data")
+              .form-group
+                input(type="file" style="color:#fff" name="bots" required)
+      .modal-footer
+        input.btn.btn-primary(type="submit" form="addbots" value="Добавить")
+        button.btn.btn-danger(data-dismiss="modal") Закрыть
