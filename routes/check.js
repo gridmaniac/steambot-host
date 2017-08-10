@@ -48,8 +48,7 @@ router.post('/update-groups', (req, res) => {
     let groupName = groupObject.split(':')[0];
     let groupId = groupObject.split(':')[1];
     let cronTimer = groupObject.split(':')[2];
-
-    updateMembershipStates(groupName, groupId);
+    
     var task = cron.schedule(cronTimer, function() {
       updateMembershipStates(groupName, groupId);
     }, false);
