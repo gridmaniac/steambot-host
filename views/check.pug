@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .container
+    br
+    h2.page-header Группы
+  br
+  .container
+    if error&&error!=''
+      .alert.alert-danger #{error}
+    if success&&success!=''
+      .alert.alert-info #{success}
+    .panel.panel-default
+      .panel-heading Редактирование списка групп для проверки
+      .panel-body
+        form(method="post" action="/check/update-groups")
+          textarea(name="groups" required="required" style="width: 100%; padding:20px; resize:vertical; min-height: 300px;") #{groups}
+          button.btn.btn-success.pull-right Обновить

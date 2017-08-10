@@ -2,6 +2,7 @@ var express = require('express'),
     router = express.Router();
 
 var async = require('async');
+var dbService = require('../modules/dbService');
 
 var mysql_query_count = (query, cb) => {
   var results = [];
@@ -25,40 +26,42 @@ var mysql_query_data = (query, cb) => {
 }
 
 router.get('/', (req, res) => {
-  var numRows, numPages, where;
+  var where = "";
+  var numRows, numPages;
   var numPerPage = parseInt(req.query.npp, 10) || 15;
-  var page = parseInt(req.query.p, 10) || 1;
+  var page = parseInt(req.query.p, 10) || 0;
   var skip = page * numPerPage;
   
   var limit = skip + ',' + skip + numPerPage;
 
   if (req.query.code) {
     if (where) where += ' AND ';
-    where += `code LIKE '%${req.query.code}%'`;
+    where += `status LIKE '%${req.query.code}%'`;
   }
   if (req.query.account) {
     if (where) where += ' AND ';
-    where += `account LIKE '%${req.query.account}%'`;
+    where += `botAccountName LIKE '%${req.query.account}%'`;
   }
   if (req.query.message) {
     if (where) where += ' AND ';
     where += `message LIKE '%${req.query.message}%'`;
   }
-   
+     
   async.series({
     numPages: (cb) => {
-      var query = 'SELECT count(*) as numRows FROM tbl_log';
+      var query = 'SELECT count(*) as numRows FROM log';
       if (where) query += ' WHERE ' + where;
-      mysql_query_count(query, (results) => {
+      dbService.query(query, (err, results) => {        
         numRows = results[0].numRows;
         numPages = Math.ceil(numRows / numPerPage);
-        cb(null, numPages);
+        cb(null, numPages); 
       });
     },
     payload: (cb) => {
-      var query = 'SELECT * FROM tbl_log ORDER BY DATE DESC LIMIT ' + limit;
-      if (where) query += ' WHERE ' + where;
-      mysql_query_data(query, (results) => {
+      var queryStart = 'SELECT * FROM log '
+      var queryEnd = ' ORDER BY timestamp DESC LIMIT ' + limit;
+      if (where) queryStart += ' WHERE ' + where;
+      dbService.query(queryStart + queryEnd, (err, results) => {
         var responsePayload = {
           results: results
         };

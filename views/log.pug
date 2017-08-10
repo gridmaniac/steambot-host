@@ -38,13 +38,13 @@ block content
             th Код
             th Аккаунт
             th Дата
-          if logs
+          if logs&&logs.length>0
             each log in logs
               tr
                 td #{log.message}
-                td #{log.code}
-                td #{log.account}
-                td #{log.date}
+                td #{log.status}
+                td #{log.botAccountName}
+                td #{log.timestamp}
           else
             tr
               td Нет сообщений

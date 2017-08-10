@@ -36,7 +36,7 @@ block content
             th Email
             th Статус
             th 
-          if bots
+          if bots && bots.length > 0
             each bot in bots
               tr
                 td #{bot.account}
@@ -44,11 +44,16 @@ block content
                 td
                   case bot.status
                     when 0
-                      form(method="post" action="/steam-guard")
+                      form(method="post" action="/steam-guard-auth")
                         .form-group
                           input(type="hidden" name="id" value=bot.id)
                           input(placeholder="КОД" style="width:50px;text-align:center" name="code")
-                          input.btn.btn-success.btn-xs(type="submit" style="margin-top:-3px;" value="Войти" required)
+                          input.btn.btn-success.btn-xs(type="submit" style="margin-top:-3px;" value="AUTH" required)
+                      form(method="post" action="/steam-guard-two-factor")
+                        .form-group
+                          input(type="hidden" name="id" value=bot.id)
+                          input(placeholder="КОД" style="width:50px;text-align:center" name="code")
+                          input.btn.btn-success.btn-xs(type="submit" style="margin-top:-3px;" value="TWO FACTOR" required)
                     when 1
                       .label.label-success Онлайн
                 td

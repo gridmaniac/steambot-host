@@ -1,0 +1,8 @@
+{
+  "dbHost": "localhost",
+  "dbUser": "root",
+  "dbPassword": "123",
+  "dbDatabase": "steam-bot",
+  "groupId":["103582791459120719"],
+  "chatConfig":"TestRiders.xml"
+}

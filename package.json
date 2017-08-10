@@ -32,10 +32,14 @@
     "gulp.spritesmith": "^6.4.0",
     "main-bower-files": "^2.13.1",
     "morgan": "~1.8.1",
+    "mysql": "^2.14.1",
+    "nconf": "^0.8.4",
+    "node-cron": "^1.2.1",
     "pug": "~2.0.0-beta11",
     "request": "^2.81.0",
     "serve-favicon": "~2.4.2",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "xml2js": "^0.4.17"
   }
 }
