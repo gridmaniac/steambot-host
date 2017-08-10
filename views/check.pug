@@ -14,5 +14,5 @@ block content
       .panel-heading Редактирование списка групп для проверки
       .panel-body
         form(method="post" action="/check/update-groups")
-          textarea(name="groups" required="required" style="width: 100%; padding:20px; resize:vertical; min-height: 300px;") #{groups}
+          textarea(placeholder="Пример конфигурации:\n\nTestRiders:103582791459120719:0 23 * * *\nRideTesters:103582791459815463:0 * * * *\n\nЭта конфигурация соответствует двум задачам:\nпроверять группу TestRiders с groupID64 103582791459120719 каждый день в 23:00\nи\nпроверять группу RideTesters с groupID64 103582791459815463 каждый час (каждую нулевую минуту часа)\n\nВнимание - соблюдение порядка параметров и разделение двоеточиями обязательно! Каждая новая задача должна быть на новой строке" name="groups" required="required" style="width: 100%; padding:20px; resize:vertical; min-height: 300px;") #{groups}
           button.btn.btn-success.pull-right Обновить
