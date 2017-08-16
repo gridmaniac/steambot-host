@@ -23,31 +23,47 @@ module.exports = {
     
     async.eachSeries(steamIds, (steamId, next) => {
       connection.query(`
-        INSERT INTO
-          users(
-            steamId,
-            groupId,
-            friendState,
-            chatState,
-            groupState,
-            botAccountName,
-            lastInvitationDate,
-            sendThanksState)
-        VALUES
-          (
-            "${steamId}",
-            "${groupId}",
-            0,
-            0,
-            0,
-            null,
-            null,
-            0)`,
-        (err, results)=>{
-          if (err) return next(new Error(`"Ошибка при попытке добавления записи Пользователя ${steamId}\n    Причина: ${err.message}`));
+        SELECT count(*)
+        FROM users
+        WHERE
+          steamId = "${steamId}"
+          AND
+          groupId = "${groupId}"
+      `, (err, results)=>{
+        if (err) return next(new Error(`"Ошибка при попытке добавления записи Пользователя ${steamId}\n    Причина: ${err.message}`));
+        if (results[0]['count(*)'] != 0) {
           return next();
         }
-      );
+
+        connection.query(`
+          INSERT INTO
+            users(
+              steamId,
+              groupId,
+              friendState,
+              chatState,
+              groupState,
+              botAccountName,
+              lastInvitationDate,
+              sendThanksState,
+              giftState)
+          VALUES
+            (
+              "${steamId}",
+              "${groupId}",
+              0,
+              0,
+              0,
+              null,
+              null,
+              0,
+              0)`,
+          (err, results)=>{
+            if (err) return next(new Error(`"Ошибка при попытке добавления записи Пользователя ${steamId}\n    Причина: ${err.message}`));
+            return next();
+          }
+        );
+      });
     },(err)=>{
       if (err) return callback(err);
       return callback(null);

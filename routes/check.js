@@ -99,7 +99,8 @@ function markAsMember(steamId, groupId, callback){
       users
     SET
       groupState = 1,
-      sendThanksState = 1
+      sendThanksState = 1,
+      giftState = 1
     WHERE
       steamId = "${steamId}"
       AND

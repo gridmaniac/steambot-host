@@ -8,7 +8,7 @@
     <repeat_invitation_timeout>60000</repeat_invitation_timeout>
     <online_action_timeout>60000</online_action_timeout>
     <handle_new_user_timeout>120000</handle_new_user_timeout>
-    <thanksgiving_timeout>30000</thanksgiving_timeout>
+    <thanksgiving_timeout>3600000</thanksgiving_timeout>
   </bot>
   <bot>
     <login>djtaffy1</login> 
@@ -19,6 +19,6 @@
     <repeat_invitation_timeout>60000</repeat_invitation_timeout>
     <online_action_timeout>60000</online_action_timeout>
     <handle_new_user_timeout>120000</handle_new_user_timeout>
-    <thanksgiving_timeout>30000</thanksgiving_timeout>
+    <thanksgiving_timeout>3600000</thanksgiving_timeout>
   </bot>
 </bots>
