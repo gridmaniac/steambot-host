@@ -41,7 +41,7 @@ router.post('/add-ids', (req, res) => {
 
         var steamids = contents.match(/[^\r\n]+/g);
         if (steamids && steamids.length > 0) {
-          dbService.initDbRecords(steamids,groupId,(err)=>{
+          dbService.initDbRecords(steamids, groupId, (err)=>{
             if (err) {
               req.flash('error', `Steam IDs не были добавлены: ${err.message}.`);
             } else {
@@ -52,6 +52,24 @@ router.post('/add-ids', (req, res) => {
         }                        
     });
   });
+});
+
+router.post('/supply', (req, res) => {
+  var data = req.body,
+      groupId = data.groupID,
+      steamids = data.steamIDs;
+
+      if (steamids && steamids.length > 0) {
+        dbService.initDbRecords(steamids, groupId, (err)=>{
+          if (err) {
+            return res.json({ error: `Steam IDs не были добавлены: ${err.message}.` });
+          } else {
+            return res.json({ success: 'Steam IDs были успешно добавлены.' });
+          }
+        });
+      } else {
+        return res.json({ error: 'Steam IDs не были добавлены: данные не были переданы.' });    
+      }                  
 });
 
 router.post('/add-bots', (req, res) => {
